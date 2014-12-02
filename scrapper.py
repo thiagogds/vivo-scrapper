@@ -1,5 +1,7 @@
-from decouple import config
 import requests
+from decouple import config
+from pyquery import PyQuery as pq
+from lxml import etree
 
 class Vivo(object):
     def __init__(self):
@@ -8,6 +10,7 @@ class Vivo(object):
         self.cpf = config('LOGIN')
         self.password = config('PASSWORD')
         self.session = requests.Session()
+        self.tickets = []
 
     def _login(self):
         payload = {'caDoc': self.cpf, 'anSenha': self.password}
@@ -17,3 +20,25 @@ class Vivo(object):
         self._login()
         response = self.session.get(self.promotions_url)
         self.events_list_html = response.text
+
+    def _parse(self):
+        self._promotions_page()
+        html = pq(self.events_list_html)
+        trs = html("body > div.content_geral > div.universo_content > div > div.conteudoHome > div.port-row > div > div > table tr")
+
+        for tr in trs.items():
+            ticket = {}
+
+            name = tr('.titulo').text()
+            date = tr('.data').text()
+            avaliabilty = tr('.disponibilidade').text()
+
+            if u"\xbb" in avaliabilty:
+                avaliabilty = avaliabilty[2:]
+
+            ticket['name'] = name
+            ticket['date'] = date
+            ticket['avaliabilty'] = avaliabilty
+
+            if name and date and avaliabilty:
+                self.tickets.append(ticket)

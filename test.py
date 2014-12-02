@@ -28,5 +28,20 @@ class VivoScrapeerTest(TestCase):
 
         self.assertIn('Ingressos gr&aacute;tis', client.events_list_html)
 
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
+    def test_parse_html(self):
+        client = Vivo()
+        client._parse()
+
+        expected_list = [
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'reservas encerradas'},
+            {'date': '03/12/2014', 'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': u'reservar'},
+            {'date': '04/12/2014', 'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'Esgotado'}
+        ]
+
+        for expected_item in expected_list:
+            self.assertIn(expected_item, client.tickets)
+
+
 if __name__ == '__main__':
     unittest.main()
