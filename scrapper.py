@@ -3,6 +3,16 @@ from decouple import config
 from pyquery import PyQuery as pq
 from lxml import etree
 
+CLOSED = u'reservas encerradas'
+BOOK = u'reservar'
+SOLD_OUT = u'Esgotado'
+
+avaliabilty_choices = {
+    CLOSED: 'CL',
+    BOOK: 'BK',
+    SOLD_OUT: 'SO'
+}
+
 class Vivo(object):
     def __init__(self):
         self.login_url = "http://www.tvantagens.com.br/autenticar-participante.action"
@@ -36,9 +46,8 @@ class Vivo(object):
             if u"\xbb" in avaliabilty:
                 avaliabilty = avaliabilty[2:]
 
-            ticket['name'] = name
-            ticket['date'] = date
-            ticket['avaliabilty'] = avaliabilty
-
             if name and date and avaliabilty:
+                ticket['name'] = name
+                ticket['date'] = date
+                ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
