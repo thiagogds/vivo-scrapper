@@ -39,6 +39,7 @@ class Vivo(object):
         for tr in trs.items():
             ticket = {}
 
+            id = tr('.titulo a').attr['href']
             name = tr('.titulo').text()
             date = tr('.data').text()
             avaliabilty = tr('.disponibilidade').text()
@@ -47,6 +48,7 @@ class Vivo(object):
                 avaliabilty = avaliabilty[2:]
 
             if name and date and avaliabilty:
+                ticket['id'] = id.split('&')[1][2:]
                 ticket['name'] = name
                 ticket['date'] = date
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]

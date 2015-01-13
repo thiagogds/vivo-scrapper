@@ -34,9 +34,9 @@ class VivoScrapeerTest(TestCase):
         client._parse()
 
         expected_list = [
-            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL'},
-            {'date': '03/12/2014', 'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': 'BK'},
-            {'date': '04/12/2014', 'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'SO'}
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6"},
+            {'date': '03/12/2014', 'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': 'BK', 'id': "7efe1e063a6bfbaa5c865f31d0a57e46"},
+            {'date': '04/12/2014', 'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'SO', 'id': "49d33f9135849ba4db71589662dcf1d3"}
         ]
 
         for expected_item in expected_list:
