@@ -1,4 +1,5 @@
 import requests
+import coopy
 from decouple import config
 from pyquery import PyQuery as pq
 from lxml import etree
@@ -14,13 +15,14 @@ avaliabilty_choices = {
 }
 
 class Vivo(object):
-    def __init__(self):
+    def __init__(self, db='coopy/'):
         self.login_url = "http://www.tvantagens.com.br/autenticar-participante.action"
         self.promotions_url = "http://www.tvantagens.com.br/listarEventos.action"
         self.cpf = config('LOGIN')
         self.password = config('PASSWORD')
         self.session = requests.Session()
         self.tickets = []
+        self.db = db
 
     def _login(self):
         payload = {'caDoc': self.cpf, 'anSenha': self.password}
@@ -53,6 +55,13 @@ class Vivo(object):
                 ticket['date'] = date
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
+
+    def _save_tickets(self):
+        wallet = coopy.base.init_persistent_system(Wallet(), basedir=self.db)
+        for item in self.tickets:
+            ticket = Ticket(**item)
+            wallet.add_ticket(ticket)
+
 class Ticket(object):
     def __init__(self, id, name, avaliabilty, date):
         self.id = id
@@ -69,4 +78,5 @@ class Wallet(object):
 
     def get_ticket(self, id):
         return filter(lambda x: x.id == id, self.tickets)[0]
+
 

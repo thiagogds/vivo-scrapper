@@ -1,16 +1,27 @@
 #coding: utf-8
+import os
+import shutil
 
 import unittest
 import vcr
+import coopy.base
 from unittest import TestCase
 from unipath import Path
 
-from scrapper import Vivo
+from scrapper import Vivo, Wallet
 
 FILE_DIR = Path(__file__)
 VCR_DIR = Path(FILE_DIR.parent, 'fixtures/vcr_cassettes')
 
+TEST_DIR = 'coopy_test/'
+
 class VivoScrapeerTest(TestCase):
+    def setUp(self):
+        os.mkdir(TEST_DIR)
+
+    def tearDown(self):
+        shutil.rmtree(TEST_DIR)
+
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_login.yaml'))
     def test_post_login(self):
         client = Vivo()
@@ -41,6 +52,20 @@ class VivoScrapeerTest(TestCase):
 
         for expected_item in expected_list:
             self.assertIn(expected_item, client.tickets)
+
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
+    def test_save_tickets(self):
+        client = Vivo(TEST_DIR)
+        client._parse()
+        client._save_tickets()
+
+        wallet = coopy.base.init_persistent_system(Wallet(), basedir=TEST_DIR)
+        ticket = wallet.get_ticket("7efe1e063a6bfbaa5c865f31d0a57e46")
+
+        self.assertEqual('QUERO MATAR MEU CHEFE 2', ticket.name)
+        self.assertEqual('BK', ticket.avaliabilty)
+        self.assertEqual('7efe1e063a6bfbaa5c865f31d0a57e46', ticket.id)
+        self.assertEqual('03/12/2014', ticket.date)
 
 
 if __name__ == '__main__':
