@@ -53,3 +53,20 @@ class Vivo(object):
                 ticket['date'] = date
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
+class Ticket(object):
+    def __init__(self, id, name, avaliabilty, date):
+        self.id = id
+        self.name = name
+        self.avaliabilty = avaliabilty
+        self.date = date
+
+class Wallet(object):
+    def __init__(self):
+        self.tickets = []
+
+    def add_ticket(self, ticket):
+        self.tickets.append(ticket)
+
+    def get_ticket(self, id):
+        return filter(lambda x: x.id == id, self.tickets)[0]
+
