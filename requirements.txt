@@ -13,3 +13,4 @@ wsgiref==0.1.2
 Unipath==1.0
 python-decouple==2.3
 ipdb==0.8
+coopy==0.3.1
