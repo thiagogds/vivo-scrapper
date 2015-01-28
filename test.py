@@ -78,5 +78,16 @@ class VivoScrapeerTest(TestCase):
         count = wallet.count_tickets()
         self.assertEqual(10, count)
 
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
+    def test_return_avalaible_tickets_at_create(self):
+        client = Vivo(TEST_DIR)
+        client._parse()
+        availables = client._save_tickets()
+
+        self.assertEqual(1, len(availables))
+        self.assertEqual('QUERO MATAR MEU CHEFE 2', availables[0].name)
+
+        availables = client._save_tickets()
+        self.assertEqual(0, len(availables))
 if __name__ == '__main__':
     unittest.main()

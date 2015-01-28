@@ -57,10 +57,15 @@ class Vivo(object):
                 self.tickets.append(ticket)
 
     def _save_tickets(self):
+        availables = []
         wallet = coopy.base.init_persistent_system(Wallet(), basedir=self.db)
         for item in self.tickets:
             ticket = Ticket(**item)
-            wallet.add_ticket(ticket)
+            available = wallet.add_ticket(ticket)
+            if available:
+                availables.append(available)
+        return availables
+
 
 class Ticket(object):
     def __init__(self, id, name, avaliabilty, date):
@@ -78,6 +83,8 @@ class Wallet(object):
             self.get_ticket(ticket.id)
         except IndexError:
             self.tickets.append(ticket)
+            if ticket.avaliabilty == avaliabilty_choices[BOOK]:
+                return ticket
 
     def get_ticket(self, id):
         return filter(lambda x: x.id == id, self.tickets)[0]
