@@ -1,8 +1,8 @@
 import requests
-import coopy
 from decouple import config
 from pyquery import PyQuery as pq
 from lxml import etree
+from coopy.base import init_persistent_system
 
 CLOSED = u'reservas encerradas'
 BOOK = u'reservar'
@@ -58,7 +58,7 @@ class Vivo(object):
 
     def _save_tickets(self):
         availables = []
-        wallet = coopy.base.init_persistent_system(Wallet(), basedir=self.db)
+        wallet = init_persistent_system(Wallet(), basedir=self.db)
         for item in self.tickets:
             ticket = Ticket(**item)
             available = wallet.add_ticket(ticket)
