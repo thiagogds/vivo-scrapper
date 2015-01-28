@@ -74,9 +74,14 @@ class Wallet(object):
         self.tickets = []
 
     def add_ticket(self, ticket):
-        self.tickets.append(ticket)
+        try:
+            self.get_ticket(ticket.id)
+        except IndexError:
+            self.tickets.append(ticket)
 
     def get_ticket(self, id):
         return filter(lambda x: x.id == id, self.tickets)[0]
 
+    def count_tickets(self):
+        return len(self.tickets)
 

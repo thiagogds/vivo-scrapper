@@ -67,6 +67,16 @@ class VivoScrapeerTest(TestCase):
         self.assertEqual('7efe1e063a6bfbaa5c865f31d0a57e46', ticket.id)
         self.assertEqual('03/12/2014', ticket.date)
 
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
+    def test_dont_save_tickets_twice(self):
+        client = Vivo(TEST_DIR)
+        client._parse()
+        client._save_tickets()
+        client._save_tickets()
+
+        wallet = coopy.base.init_persistent_system(Wallet(), basedir=TEST_DIR)
+        count = wallet.count_tickets()
+        self.assertEqual(10, count)
 
 if __name__ == '__main__':
     unittest.main()
