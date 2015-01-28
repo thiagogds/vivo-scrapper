@@ -1,5 +1,6 @@
 from scrapper import Vivo
 import mandrill
+from decouple import config
 
 def run():
     client = Vivo()
@@ -7,7 +8,8 @@ def run():
     availables = client._save_tickets()
 
     if len(availables) > 0:
-        mandrill_client = mandrill.Mandrill('wmwohycS5Po67rg7gK0Xmw')
+        KEY = config('MANDRILL_KEY')
+        mandrill_client = mandrill.Mandrill(KEY)
         message = {
            'from_email': 'thiagogds14@gmail.com',
            'from_name': 'Vivo Scrapper',
