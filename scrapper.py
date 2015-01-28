@@ -79,12 +79,19 @@ class Wallet(object):
         self.tickets = []
 
     def add_ticket(self, ticket):
+        already_available = False
         try:
-            self.get_ticket(ticket.id)
-        except IndexError:
-            self.tickets.append(ticket)
-            if ticket.avaliabilty == avaliabilty_choices[BOOK]:
-                return ticket
+            old_ticket = self.get_ticket(ticket.id)
+            index = self.tickets.index(old_ticket)
+            self.tickets.pop(index)
+            if old_ticket.avaliabilty == avaliabilty_choices[BOOK]:
+                already_available = True
+        except:
+            pass
+
+        self.tickets.append(ticket)
+        if not already_available and ticket.avaliabilty == avaliabilty_choices[BOOK]:
+            return ticket
 
     def get_ticket(self, id):
         return filter(lambda x: x.id == id, self.tickets)[0]

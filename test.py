@@ -89,5 +89,26 @@ class VivoScrapeerTest(TestCase):
 
         availables = client._save_tickets()
         self.assertEqual(0, len(availables))
+
+    def test_update_tickets(self):
+        tickets = [
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6"},
+        ]
+
+        client = Vivo(TEST_DIR)
+        client.tickets = tickets
+        client._save_tickets()
+
+        new_tickets = [
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'BK', 'id': "6146707aa13ca3946e60757349c0a9d6"},
+        ]
+
+        client.tickets = new_tickets
+        availables = client._save_tickets()
+
+        wallet = coopy.base.init_persistent_system(Wallet(), basedir=TEST_DIR)
+        updated = wallet.get_ticket("6146707aa13ca3946e60757349c0a9d6")
+        self.assertEqual("BK", updated.avaliabilty)
+        self.assertEqual(1, len(availables))
 if __name__ == '__main__':
     unittest.main()
