@@ -15,8 +15,28 @@ def run():
            'from_name': 'Vivo Scrapper',
            'subject': 'Tem evento novo!!!!',
            'text': 'http://www.tvantagens.com.br/',
-           'to': [{'email': 'thiagogds14@gmail.com',
-                'type': 'to'}],
+           'to': [
+                {
+                    'email': 'thiagogds14@gmail.com',
+                    'type': 'to',
+                },
+                {
+                    'email': 'rodrigopqn@gmail.com',
+                    'type': 'to',
+                },
+                {
+                    'email': 'pedrojudo@gmail.com',
+                    'type': 'to',
+                },
+                {
+                    'email': 'nandaff@poli.ufrj.br',
+                    'type': 'to',
+                },
+                {
+                    'email': 'eduardooc.86@gmail.com',
+                    'type': 'to',
+                },
+            ],
         }
 
         mandrill_client.messages.send(message=message)
