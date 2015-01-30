@@ -1,4 +1,5 @@
 PyYAML==3.11
+Jinja2==2.7.3
 contextlib2==0.4.0
 cssselect==0.9.1
 lxml==3.4.1

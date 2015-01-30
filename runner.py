@@ -1,6 +1,10 @@
 import mandrill
 from decouple import config
+from jinja2 import Environment, PackageLoader
+
 from src.scrapper import Vivo
+env = Environment(loader=PackageLoader('src', 'templates'))
+
 
 def run():
     client = Vivo()
@@ -9,6 +13,7 @@ def run():
 
     if len(availables) > 0:
         KEY = config('MANDRILL_KEY')
+        template = env.get_template('mail.txt')
         mandrill_client = mandrill.Mandrill(KEY)
         message = {
            'from_email': 'thiagogds14@gmail.com',
