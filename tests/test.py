@@ -8,7 +8,7 @@ import coopy.base
 from unittest import TestCase
 from unipath import Path
 
-from scrapper import Vivo, Wallet
+from src.scrapper import Vivo, Wallet
 
 FILE_DIR = Path(__file__)
 VCR_DIR = Path(FILE_DIR.parent, 'fixtures/vcr_cassettes')
@@ -110,7 +110,3 @@ class VivoScrapeerTest(TestCase):
         updated = wallet.get_ticket("6146707aa13ca3946e60757349c0a9d6")
         self.assertEqual("BK", updated.avaliabilty)
         self.assertEqual(1, len(availables))
-
-
-if __name__ == '__main__':
-    unittest.main()

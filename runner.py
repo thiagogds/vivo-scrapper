@@ -1,6 +1,6 @@
-from scrapper import Vivo
 import mandrill
 from decouple import config
+from src.scrapper import Vivo
 
 def run():
     client = Vivo()
