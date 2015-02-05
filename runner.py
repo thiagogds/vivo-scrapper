@@ -28,19 +28,19 @@ def run():
                 },
                 {
                     'email': 'rodrigopqn@gmail.com',
-                    'type': 'to',
+                    'type': 'bcc',
                 },
                 {
                     'email': 'pedrojudo@gmail.com',
-                    'type': 'to',
+                    'type': 'bcc',
                 },
                 {
                     'email': 'nandaff@poli.ufrj.br',
-                    'type': 'to',
+                    'type': 'bcc',
                 },
                 {
                     'email': 'eduardooc.86@gmail.com',
-                    'type': 'to',
+                    'type': 'bcc',
                 },
             ],
         }
