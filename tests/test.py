@@ -110,3 +110,16 @@ class VivoScrapeerTest(TestCase):
         updated = wallet.get_ticket("6146707aa13ca3946e60757349c0a9d6")
         self.assertEqual("BK", updated.avaliabilty)
         self.assertEqual(1, len(availables))
+
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions_with_cancel.yaml'))
+    def test_cancel_in_avaliability(self):
+        client = Vivo()
+        client._parse()
+
+        expected_list = [
+            {'date': '22/02/2015', 'name': 'NOITE INFELIZ - A COMEDIA MUSICAL DAS MALDADES', 'avaliabilty': 'CA', 'id': "ede5d5105c2098e56ef88fc0987765a4"},
+        ]
+
+        for expected_item in expected_list:
+            self.assertIn(expected_item, client.tickets)
+
