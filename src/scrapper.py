@@ -7,11 +7,13 @@ from coopy.base import init_persistent_system
 CLOSED = u'reservas encerradas'
 BOOK = u'reservar'
 SOLD_OUT = u'Esgotado'
+CANCEL = u'cancelar a reserva'
 
 avaliabilty_choices = {
     CLOSED: 'CL',
     BOOK: 'BK',
-    SOLD_OUT: 'SO'
+    SOLD_OUT: 'SO',
+    CANCEL: 'CA',
 }
 
 class Vivo(object):
