@@ -64,6 +64,7 @@ class Vivo(object):
         for item in self.tickets:
             ticket = Ticket(**item)
             available = wallet.add_ticket(ticket)
+            wallet.take_snapshot()
             if available:
                 availables.append(available)
         return availables
