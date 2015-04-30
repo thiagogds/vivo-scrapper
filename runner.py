@@ -42,6 +42,10 @@ def run():
                     'email': 'eduardooc.86@gmail.com',
                     'type': 'bcc',
                 },
+                {
+                    'email': 'henrique@bastos.net',
+                    'type': 'bcc',
+                },
             ],
         }
 
