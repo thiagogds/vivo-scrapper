@@ -30,18 +30,13 @@ class Vivo(object):
         payload = {'caDoc': self.cpf, 'anSenha': self.password}
         response = self.session.post(self.login_url, data=payload)
 
-    def _promotions_page(self):
-        self._login()
-        response = self.session.get(self.promotions_url)
-        return response.text
-
-    def _page_detail(self, page_url):
+    def _get(self, page_url):
         self._login()
         response = self.session.get(page_url)
         return response.text
 
     def _parse(self):
-        html = pq(self._promotions_page())
+        html = pq(self._get(self.promotions_url))
         trs = html("body > div.content_geral > div.universo_content > div > div.conteudoHome > div.port-row > div > div > table tr")
 
         for tr in trs.items():

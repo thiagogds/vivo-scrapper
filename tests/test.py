@@ -35,7 +35,7 @@ class VivoScrapeerTest(TestCase):
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
     def test_get_promotions_list(self):
         client = Vivo()
-        html = client._promotions_page()
+        html = client._get("http://www.tvantagens.com.br/listarEventos.action")
 
         self.assertIn('Ingressos gr&aacute;tis', html)
 
@@ -127,7 +127,7 @@ class VivoScrapeerTest(TestCase):
     def test_get_promotion_page(self):
         page_url = u"http://www.tvantagens.com.br/detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
         client = Vivo()
-        html = client._page_detail(page_url)
+        html = client._get(page_url)
 
         self.assertIn("Detalhes do Evento", html)
 
