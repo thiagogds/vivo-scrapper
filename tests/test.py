@@ -35,9 +35,9 @@ class VivoScrapeerTest(TestCase):
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
     def test_get_promotions_list(self):
         client = Vivo()
-        client._promotions_page()
+        html = client._promotions_page()
 
-        self.assertIn('Ingressos gr&aacute;tis', client.events_list_html)
+        self.assertIn('Ingressos gr&aacute;tis', html)
 
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
     def test_parse_html(self):

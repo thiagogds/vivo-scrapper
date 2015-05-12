@@ -33,11 +33,15 @@ class Vivo(object):
     def _promotions_page(self):
         self._login()
         response = self.session.get(self.promotions_url)
-        self.events_list_html = response.text
+        return response.text
+
+    def _page_detail(self, page_url):
+        self._login()
+        response = self.session.get(page_url)
+        return response.text
 
     def _parse(self):
-        self._promotions_page()
-        html = pq(self.events_list_html)
+        html = pq(self._promotions_page())
         trs = html("body > div.content_geral > div.universo_content > div > div.conteudoHome > div.port-row > div > div > table tr")
 
         for tr in trs.items():
