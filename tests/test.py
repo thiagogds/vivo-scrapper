@@ -46,9 +46,9 @@ class VivoScrapeerTest(TestCase):
         client._parse()
 
         expected_list = [
-            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6"},
-            {'date': '03/12/2014', 'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': 'BK', 'id': "7efe1e063a6bfbaa5c865f31d0a57e46"},
-            {'date': '04/12/2014', 'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'SO', 'id': "49d33f9135849ba4db71589662dcf1d3"}
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PRE20018&k=6146707aa13ca3946e60757349c0a9d6'},
+            {'date': '03/12/2014', 'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': 'BK', 'id': "7efe1e063a6bfbaa5c865f31d0a57e46", 'link': 'detalharEvento.action?caMktEvtCod=PRE20002&k=7efe1e063a6bfbaa5c865f31d0a57e46'},
+            {'date': '04/12/2014', 'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'SO', 'id': "49d33f9135849ba4db71589662dcf1d3", 'link': 'detalharEvento.action?caMktEvtCod=PCT20032&k=49d33f9135849ba4db71589662dcf1d3'},
         ]
 
         for expected_item in expected_list:
@@ -93,7 +93,7 @@ class VivoScrapeerTest(TestCase):
 
     def test_update_tickets(self):
         tickets = [
-            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6"},
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         client = Vivo(TEST_DIR)
@@ -101,7 +101,7 @@ class VivoScrapeerTest(TestCase):
         client._save_tickets()
 
         new_tickets = [
-            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'BK', 'id': "6146707aa13ca3946e60757349c0a9d6"},
+            {'date': '02/12/2014', 'name': 'OS CARAS DE PAUS', 'avaliabilty': 'BK', 'id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         client.tickets = new_tickets
@@ -118,7 +118,7 @@ class VivoScrapeerTest(TestCase):
         client._parse()
 
         expected_list = [
-            {'date': '22/02/2015', 'name': 'NOITE INFELIZ - A COMEDIA MUSICAL DAS MALDADES', 'avaliabilty': 'CA', 'id': "ede5d5105c2098e56ef88fc0987765a4"},
+            {'date': '22/02/2015', 'name': 'NOITE INFELIZ - A COMEDIA MUSICAL DAS MALDADES', 'avaliabilty': 'CA', 'id': "ede5d5105c2098e56ef88fc0987765a4", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         for expected_item in expected_list:
@@ -126,7 +126,7 @@ class VivoScrapeerTest(TestCase):
 
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotion_detail.yaml'))
     def test_get_promotion_page(self):
-        page_url = u"http://www.tvantagens.com.br/detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
+        page_url = u"detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
         client = Vivo()
         html = client._get(page_url)
 
@@ -134,13 +134,49 @@ class VivoScrapeerTest(TestCase):
 
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotion_detail.yaml'))
     def test_parse_promotion_page(self):
-        page_url = u"http://www.tvantagens.com.br/detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
+        page_url = u"detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
         client = Vivo()
         detail = client._parse_detail(page_url)
         expected_detail = {
             'date': u'13/05/2015 às 21:00h',
-            'location': "CINEMARK BOTAFOGO",
-            'address': "R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
+            'location': u"CINEMARK BOTAFOGO",
+            'address': u"R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
         }
 
         self.assertEqual(detail, expected_detail)
+
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions_details.yaml'))
+    def test_add_more_info_to_tickets(self):
+        client = Vivo()
+        client._get_ticket_info()
+
+        expected_event = {
+                'name': u'DIVÂ A 2',
+                'avaliabilty': u'SO',
+                'id': "d95dae5e0a1c5e343959cb76b1f94672",
+                'link': "detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672",
+                'date': u'13/05/2015 às 21:00h',
+                'location': u"CINEMARK BOTAFOGO",
+                'address': u"R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
+        }
+
+        self.assertIn(expected_event, client.tickets)
+
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions_details.yaml'))
+    def test_save_ticket_full_info(self):
+        client = Vivo(TEST_DIR)
+        client._get_ticket_info()
+        client._save_tickets()
+
+        wallet = coopy.base.init_persistent_system(Wallet(), basedir=TEST_DIR)
+        ticket = wallet.get_ticket("d95dae5e0a1c5e343959cb76b1f94672")
+
+        self.assertEqual(u'DIVÂ A 2', ticket.name)
+        self.assertEqual('SO', ticket.avaliabilty)
+        self.assertEqual('d95dae5e0a1c5e343959cb76b1f94672', ticket.id)
+        self.assertEqual('detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672', ticket.link)
+        self.assertEqual(u'13/05/2015 às 21:00h', ticket.date)
+        self.assertEqual(u'CINEMARK BOTAFOGO', ticket.location)
+        self.assertEqual(u'R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040', ticket.address)
+
+

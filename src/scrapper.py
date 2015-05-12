@@ -21,7 +21,8 @@ def value(tr):
 
 class Vivo(object):
     def __init__(self, db='coopy/'):
-        self.login_url = "http://www.tvantagens.com.br/autenticar-participante.action"
+        self.host = "http://www.tvantagens.com.br/"
+        self.login_url = self.host + "autenticar-participante.action"
         self.promotions_url = config('PROMOTIONS_URL')
         self.cpf = config('LOGIN')
         self.password = config('PASSWORD')
@@ -35,7 +36,7 @@ class Vivo(object):
 
     def _get(self, page_url):
         self._login()
-        response = self.session.get(page_url)
+        response = self.session.get(self.host+page_url)
         return response.text
 
     def _parse(self):
@@ -45,7 +46,7 @@ class Vivo(object):
         for tr in trs.items():
             ticket = {}
 
-            id = tr('.titulo a').attr['href']
+            href = tr('.titulo a').attr['href']
             name = tr('.titulo').text()
             date = tr('.data').text()
             avaliabilty = tr('.disponibilidade').text()
@@ -54,7 +55,8 @@ class Vivo(object):
                 avaliabilty = avaliabilty[2:]
 
             if name and date and avaliabilty:
-                ticket['id'] = id.split('&')[1][2:]
+                ticket['id'] = href.split('&')[1][2:]
+                ticket['link'] = href
                 ticket['name'] = name
                 ticket['date'] = date
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
@@ -71,6 +73,11 @@ class Vivo(object):
 
         return detail
 
+    def _get_ticket_info(self):
+        self._parse()
+        for ticket in self.tickets:
+            ticket.update(self._parse_detail(ticket['link']))
+
     def _save_tickets(self):
         availables = []
         wallet = init_persistent_system(Wallet(), basedir=self.db)
@@ -84,11 +91,14 @@ class Vivo(object):
 
 
 class Ticket(object):
-    def __init__(self, id, name, avaliabilty, date):
+    def __init__(self, id, name, avaliabilty, date, link=None, location=None, address=None):
         self.id = id
         self.name = name
         self.avaliabilty = avaliabilty
         self.date = date
+        self.link = link
+        self.location = location
+        self.address = address
 
 class Wallet(object):
     def __init__(self):
