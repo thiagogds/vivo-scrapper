@@ -123,3 +123,11 @@ class VivoScrapeerTest(TestCase):
         for expected_item in expected_list:
             self.assertIn(expected_item, client.tickets)
 
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotion_detail.yaml'))
+    def test_get_promotion_page(self):
+        page_url = u"http://www.tvantagens.com.br/detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
+        client = Vivo()
+        html = client._page_detail(page_url)
+
+        self.assertIn("Detalhes do Evento", html)
+
