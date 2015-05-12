@@ -16,6 +16,9 @@ avaliabilty_choices = {
     CANCEL: 'CA',
 }
 
+def value(tr):
+    return tr.xpath("normalize-space(td[2])")
+
 class Vivo(object):
     def __init__(self, db='coopy/'):
         self.login_url = "http://www.tvantagens.com.br/autenticar-participante.action"
@@ -57,14 +60,15 @@ class Vivo(object):
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
 
+
     def _parse_detail(self, page_url):
         html = pq(self._get(page_url))
         trs = html(".tabela01 tr")
 
         detail = {}
-        detail['date'] = trs[2].xpath("normalize-space(td[2])")
-        detail['location'] = trs[5].xpath("normalize-space(td[2])")
-        detail['address'] = trs[6].xpath("normalize-space(td[2])")
+        detail['date'] = value(trs[2])
+        detail['location'] = value(trs[5])
+        detail['address'] = value(trs[6])
 
         return detail
 
