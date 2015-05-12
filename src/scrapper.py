@@ -19,7 +19,7 @@ avaliabilty_choices = {
 class Vivo(object):
     def __init__(self, db='coopy/'):
         self.login_url = "http://www.tvantagens.com.br/autenticar-participante.action"
-        self.promotions_url = "http://www.tvantagens.com.br/listarEventos.action"
+        self.promotions_url = config('PROMOTIONS_URL')
         self.cpf = config('LOGIN')
         self.password = config('PASSWORD')
         self.session = requests.Session()

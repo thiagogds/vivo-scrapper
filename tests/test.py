@@ -7,6 +7,7 @@ import vcr
 import coopy.base
 from unittest import TestCase
 from unipath import Path
+from decouple import config
 
 from src.scrapper import Vivo, Wallet
 
@@ -35,7 +36,7 @@ class VivoScrapeerTest(TestCase):
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
     def test_get_promotions_list(self):
         client = Vivo()
-        html = client._get("http://www.tvantagens.com.br/listarEventos.action")
+        html = client._get(config('PROMOTIONS_URL'))
 
         self.assertIn('Ingressos gr&aacute;tis', html)
 
