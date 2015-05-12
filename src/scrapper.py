@@ -60,7 +60,6 @@ class Vivo(object):
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
 
-
     def _parse_detail(self, page_url):
         html = pq(self._get(page_url))
         trs = html(".tabela01 tr")
@@ -71,7 +70,6 @@ class Vivo(object):
         detail['address'] = value(trs[6])
 
         return detail
-
 
     def _save_tickets(self):
         availables = []
