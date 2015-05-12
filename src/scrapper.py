@@ -57,6 +57,18 @@ class Vivo(object):
                 ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
                 self.tickets.append(ticket)
 
+    def _parse_detail(self, page_url):
+        html = pq(self._get(page_url))
+        trs = html(".tabela01 tr")
+
+        detail = {}
+        detail['date'] = trs[2].xpath("normalize-space(td[2])")
+        detail['location'] = trs[5].xpath("normalize-space(td[2])")
+        detail['address'] = trs[6].xpath("normalize-space(td[2])")
+
+        return detail
+
+
     def _save_tickets(self):
         availables = []
         wallet = init_persistent_system(Wallet(), basedir=self.db)

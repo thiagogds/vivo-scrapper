@@ -132,3 +132,15 @@ class VivoScrapeerTest(TestCase):
 
         self.assertIn("Detalhes do Evento", html)
 
+    @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotion_detail.yaml'))
+    def test_parse_promotion_page(self):
+        page_url = u"http://www.tvantagens.com.br/detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672"
+        client = Vivo()
+        detail = client._parse_detail(page_url)
+        expected_detail = {
+            'date': u'13/05/2015 às 21:00h',
+            'location': "CINEMARK BOTAFOGO",
+            'address': "R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
+        }
+
+        self.assertEqual(detail, expected_detail)
