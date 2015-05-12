@@ -8,7 +8,7 @@ env = Environment(loader=PackageLoader('src', 'templates'))
 
 def run():
     client = Vivo()
-    client._parse()
+    client._get_ticket_info()
     availables = client._save_tickets()
 
     if len(availables) > 0:
