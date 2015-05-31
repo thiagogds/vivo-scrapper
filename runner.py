@@ -46,6 +46,14 @@ def run():
                     'email': 'henrique@bastos.net',
                     'type': 'bcc',
                 },
+                {
+                    'email': 'luciana.cassiano@gmail.com',
+                    'type': 'bcc',
+                },
+                {
+                    'email': 'soraia.araujo@gmail.com',
+                    'type': 'bcc',
+                },
             ],
         }
 
