@@ -14,12 +14,15 @@ def run():
     if len(availables) > 0:
         KEY = config('MANDRILL_KEY')
         template = env.get_template('mail.txt')
+        html_template = env.get_template('mail.html')
         text = template.render(tickets=availables)
+        html = html_template.render(tickets=availables)
         mandrill_client = mandrill.Mandrill(KEY)
         message = {
            'from_email': 'thiagogds14@gmail.com',
            'from_name': 'Vivo Scrapper',
            'subject': 'Tem evento novo!!!!',
+           'html': html,
            'text': text,
            'to': [
                 {
