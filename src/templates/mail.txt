@@ -4,5 +4,6 @@ Novos ingressos grátis:
   - {{ ticket.date }}
   - {{ ticket.location }}
   - {{ ticket.address }}
+  - {{ ticket.description }}
 ##################################
 {% endfor %}

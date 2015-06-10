@@ -70,6 +70,7 @@ class Vivo(object):
         detail['date'] = value(trs[2])
         detail['location'] = value(trs[5])
         detail['address'] = value(trs[6])
+        detail['description'] = html("#geral > div.txtRegulamento > p:nth-child(2)").text()
 
         return detail
 
@@ -91,7 +92,7 @@ class Vivo(object):
 
 
 class Ticket(object):
-    def __init__(self, id, name, avaliabilty, date, link=None, location=None, address=None):
+    def __init__(self, id, name, avaliabilty, date, link=None, location=None, address=None, description=None):
         self.id = id
         self.name = name
         self.avaliabilty = avaliabilty
@@ -99,6 +100,7 @@ class Ticket(object):
         self.link = link
         self.location = location
         self.address = address
+        self.description = description
 
 class Wallet(object):
     def __init__(self):

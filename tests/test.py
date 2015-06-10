@@ -141,6 +141,7 @@ class VivoScrapeerTest(TestCase):
             'date': u'13/05/2015 às 21:00h',
             'location': u"CINEMARK BOTAFOGO",
             'address': u"R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
+            'description': u"Eduarda (Vanessa Giácomo) é uma ortopedista bem sucedida, casada com o produtor de eventos Marcos (Rafael Infante) há 10 anos. Devido ao desgaste do relacionamento, eles resolvem fazer uma terapia de casal. Só que, durante as sessões, eles decidem se separar. É quando Eduarda conhece Leo (Marcelo Serrado), por quem fica interessada",
         }
 
         self.assertEqual(detail, expected_detail)
@@ -158,6 +159,7 @@ class VivoScrapeerTest(TestCase):
                 'date': u'13/05/2015 às 21:00h',
                 'location': u"CINEMARK BOTAFOGO",
                 'address': u"R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040",
+                'description': u"Eduarda (Vanessa Giácomo) é uma ortopedista bem sucedida, casada com o produtor de eventos Marcos (Rafael Infante) há 10 anos. Devido ao desgaste do relacionamento, eles resolvem fazer uma terapia de casal. Só que, durante as sessões, eles decidem se separar. É quando Eduarda conhece Leo (Marcelo Serrado), por quem fica interessada",
         }
 
         self.assertIn(expected_event, client.tickets)
