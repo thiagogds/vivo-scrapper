@@ -57,6 +57,10 @@ def run():
                     'email': 'soraia.araujo@gmail.com',
                     'type': 'bcc',
                 },
+                {
+                    'email': 'vivo@nardi.me',
+                    'type': 'bcc',
+                },
             ],
         }
 
