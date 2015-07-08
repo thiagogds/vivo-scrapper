@@ -1,14 +1,18 @@
+# encode: utf-8
+import sys
 
+from decouple import config
+from dj_database_url import parse as db_url
+from unipath import Path
 
+PROJECT_DIR = Path(__file__).parent
 
+SECRET_KEY = config('SECRET_KEY')
 
+DEBUG = config('DEBUG', default=False, cast=bool)
+TEMPLATE_DEBUG = DEBUG
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-
-SECRET_KEY = 'b^-&xrn3$nq8okhkcw*f@$oye4uvsrya*b5xl!%$r5ozvb%x75'
-DEBUG = True
+TESTING = 'test' in sys.argv
 
 ALLOWED_HOSTS = []
 
@@ -55,10 +59,10 @@ WSGI_APPLICATION = 'vivo_scrapper.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'default': config(
+            'DATABASE_URL',
+            default='sqlite:///' + PROJECT_DIR.child('db.sqlite3'),
+            cast=db_url),
 }
 
 

@@ -2,6 +2,7 @@ PyYAML==3.11
 Jinja2==2.7.3
 contextlib2==0.4.0
 cssselect==0.9.1
+dj-database-url==0.3.0
 lxml==3.4.1
 mock==1.0.1
 pyquery==1.2.9
