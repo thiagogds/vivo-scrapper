@@ -17,6 +17,7 @@ TESTING = 'test' in sys.argv
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'registration.User'
+LOGIN_URL = '/login/'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
