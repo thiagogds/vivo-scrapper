@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="box login">
+      <form class="login" action="." method="POST">
+        <div>
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next }}" />
+          {{ form.as_p }}
+          {% for field in form %}
+          {% if field.errors %}<p>{{ field.label }} - {{ field.errors|striptags }}</p>{% endif %}
+          {% endfor %}
+          <p>{{ form.non_field_errors|striptags }}</p>
+        </div>
+        <input class="button" type="submit" name="login" value="login" />
+      </form>
+    </div>
+</body>
+</html>

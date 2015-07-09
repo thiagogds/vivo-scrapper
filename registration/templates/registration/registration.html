@@ -1,0 +1,42 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+  </head>
+  <body>
+      <div class="box" style="width: 42em;">
+          <form action="." method="POST">
+            <div>
+              <header>
+              <h1>Register.</h1>
+              </header>
+
+              <div>
+                {% for field in form %}
+                  {% if field.errors %}<p class="form_errors">{{ field.label }} - {{ field.errors|striptags }}</p>{% endif %}
+                  {% endfor %}
+                <p class="form_errors">{{ form.non_field_errors|striptags }}</p>
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <input type="hidden" name="service" value="{{ service }}" />
+                <input type="hidden" name="port" value="{{ port }}" />
+              </div>
+
+              <table>
+                <tr><div><th>{{ form.email.label }}</th><td>{{ form.email }}</td></div></tr>
+                <tr><th>{{ form.full_name.label }}</th><td>{{ form.full_name }}</td></tr>
+                <tr><th> {{ form.password1.label }}</th><td>{{ form.password1 }}</td></tr>
+                <tr><th>{{ form.password2.label }}</th><td>{{ form.password2 }}</td></tr>
+              </table>
+              <input type="hidden" name="service" value="{{ service }}">
+              <input type="hidden" name="port" value="{{ port }}">
+            </div>
+            <footer class="flex-between">
+              <a href="{% url 'auth:login' %}?{% if service %}service={{ service }}{% endif %}{% if port %}&port={{ port }}{% endif %}">I already have an account.</a>
+              <input class="button" type="submit" name="register" value="register" />
+            </footer>
+          </form>
+      </div>
+  </body>
+  </html>
