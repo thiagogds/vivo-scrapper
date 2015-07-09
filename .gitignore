@@ -55,3 +55,4 @@ target/
 
 settings.ini
 coopy*
+vivo_scrapper/db.sqlite3
