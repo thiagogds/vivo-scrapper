@@ -1,0 +1,4 @@
+{% autoescape off %}
+{{ activation_url }}
+{% endautoescape %}
+

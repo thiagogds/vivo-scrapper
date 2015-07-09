@@ -19,3 +19,4 @@ six==1.8.0
 vcrpy==1.1.2
 wrapt==1.10.1
 wsgiref==0.1.2
+django-simple-email-confirmation==0.12

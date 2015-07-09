@@ -16,6 +16,7 @@ TESTING = 'test' in sys.argv
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'registration.User'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -24,6 +25,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'simple_email_confirmation',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,6 +68,9 @@ DATABASES = {
             cast=db_url),
 }
 
+EMAIL_BACKEND=config('EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend'
+)
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
