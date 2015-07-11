@@ -6,7 +6,7 @@ import datetime
 import unittest
 import vcr
 import coopy.base
-from unittest import TestCase
+from django.test import TestCase
 from unipath import Path
 from decouple import config
 from django.utils.timezone import make_aware, utc
@@ -172,5 +172,3 @@ class VivoScrapeerTest(TestCase):
         self.assertEqual(make_aware(datetime.datetime(2015, 5, 14, 0, 0), timezone=utc), ticket.date)
         self.assertEqual(u'CINEMARK BOTAFOGO', ticket.location)
         self.assertEqual(u'R PRAIA DE BOTAFOGO, 400, BOTAFOGO - RIO DE JANEIRO - RJ, CEP: 22250-040', ticket.address)
-
-
