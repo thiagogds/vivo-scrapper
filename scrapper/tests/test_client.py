@@ -17,7 +17,7 @@ from scrapper.models import Ticket
 FILE_DIR = Path(__file__)
 VCR_DIR = Path(FILE_DIR.parent, 'fixtures/vcr_cassettes')
 
-class VivoScrapeerTest(TestCase):
+class VivoScrapperTest(TestCase):
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_login.yaml'))
     def test_post_login(self):
         client = Vivo()
@@ -41,9 +41,9 @@ class VivoScrapeerTest(TestCase):
         client._parse()
 
         expected_list = [
-            {'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PRE20018&k=6146707aa13ca3946e60757349c0a9d6'},
-            {'name': 'QUERO MATAR MEU CHEFE 2', 'avaliabilty': 'BK', 'internal_id': "7efe1e063a6bfbaa5c865f31d0a57e46", 'link': 'detalharEvento.action?caMktEvtCod=PRE20002&k=7efe1e063a6bfbaa5c865f31d0a57e46'},
-            {'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliabilty': 'SO', 'internal_id': "49d33f9135849ba4db71589662dcf1d3", 'link': 'detalharEvento.action?caMktEvtCod=PCT20032&k=49d33f9135849ba4db71589662dcf1d3'},
+            {'name': 'OS CARAS DE PAUS', 'avaliability': 'CL', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PRE20018&k=6146707aa13ca3946e60757349c0a9d6'},
+            {'name': 'QUERO MATAR MEU CHEFE 2', 'avaliability': 'BK', 'internal_id': "7efe1e063a6bfbaa5c865f31d0a57e46", 'link': 'detalharEvento.action?caMktEvtCod=PRE20002&k=7efe1e063a6bfbaa5c865f31d0a57e46'},
+            {'name': u'CHUVA CONSTANTE - A FELICIDADE \xc9 FORA DA LEI', 'avaliability': 'SO', 'internal_id': "49d33f9135849ba4db71589662dcf1d3", 'link': 'detalharEvento.action?caMktEvtCod=PCT20032&k=49d33f9135849ba4db71589662dcf1d3'},
         ]
 
         for expected_item in expected_list:
@@ -58,7 +58,7 @@ class VivoScrapeerTest(TestCase):
         ticket = Ticket.objects.get(internal_id="7efe1e063a6bfbaa5c865f31d0a57e46")
 
         self.assertEqual('QUERO MATAR MEU CHEFE 2', ticket.name)
-        self.assertEqual('BK', ticket.avaliabilty)
+        self.assertEqual('BK', ticket.avaliability)
         self.assertEqual('7efe1e063a6bfbaa5c865f31d0a57e46', ticket.internal_id)
 
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions.yaml'))
@@ -87,7 +87,7 @@ class VivoScrapeerTest(TestCase):
 
     def test_update_tickets(self):
         tickets = [
-            {'name': 'OS CARAS DE PAUS', 'avaliabilty': 'CL', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
+            {'name': 'OS CARAS DE PAUS', 'avaliability': 'CL', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         client = Vivo()
@@ -95,14 +95,14 @@ class VivoScrapeerTest(TestCase):
         client._save_tickets()
 
         new_tickets = [
-            {'name': 'OS CARAS DE PAUS', 'avaliabilty': 'BK', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
+            {'name': 'OS CARAS DE PAUS', 'avaliability': 'BK', 'internal_id': "6146707aa13ca3946e60757349c0a9d6", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         client.tickets = new_tickets
         availables = client._save_tickets()
 
         updated = Ticket.objects.get(internal_id="6146707aa13ca3946e60757349c0a9d6")
-        self.assertEqual("BK", updated.avaliabilty)
+        self.assertEqual("BK", updated.avaliability)
         self.assertEqual(1, len(availables))
 
     @vcr.use_cassette(Path(VCR_DIR, 'vivo_promotions_with_cancel.yaml'))
@@ -111,7 +111,7 @@ class VivoScrapeerTest(TestCase):
         client._parse()
 
         expected_list = [
-            {'name': 'NOITE INFELIZ - A COMEDIA MUSICAL DAS MALDADES', 'avaliabilty': 'CA', 'internal_id': "ede5d5105c2098e56ef88fc0987765a4", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
+            {'name': 'NOITE INFELIZ - A COMEDIA MUSICAL DAS MALDADES', 'avaliability': 'CA', 'internal_id': "ede5d5105c2098e56ef88fc0987765a4", 'link': 'detalharEvento.action?caMktEvtCod=PCT20672&k=ede5d5105c2098e56ef88fc0987765a4'},
         ]
 
         for expected_item in expected_list:
@@ -146,7 +146,7 @@ class VivoScrapeerTest(TestCase):
 
         expected_event = {
                 'name': u'DIVÂ A 2',
-                'avaliabilty': u'SO',
+                'avaliability': u'SO',
                 'internal_id': "d95dae5e0a1c5e343959cb76b1f94672",
                 'link': "detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672",
                 'date': u'13/05/2015 às 21:00h',
@@ -166,7 +166,7 @@ class VivoScrapeerTest(TestCase):
         ticket = Ticket.objects.get(internal_id="d95dae5e0a1c5e343959cb76b1f94672")
 
         self.assertEqual(u'DIVÂ A 2', ticket.name)
-        self.assertEqual('SO', ticket.avaliabilty)
+        self.assertEqual('SO', ticket.avaliability)
         self.assertEqual('d95dae5e0a1c5e343959cb76b1f94672', ticket.internal_id)
         self.assertEqual('detalharEvento.action?caMktEvtCod=PRE21706&k=d95dae5e0a1c5e343959cb76b1f94672', ticket.link)
         self.assertEqual(make_aware(datetime.datetime(2015, 5, 14, 0, 0), timezone=utc), ticket.date)

@@ -2,9 +2,14 @@
 from django.db import models
 
 class Ticket(models.Model):
+    CLOSED = 'CL'
+    BOOK = 'BK'
+    SOLD_OUT = 'SO'
+    CANCEL = 'CA'
+
     internal_id = models.CharField(u"ID na Vivo", max_length=255, null=True, blank=True)
     name = models.CharField(u"Nome", max_length=255, null=True, blank=True)
-    avaliabilty = models.CharField(u"Disponibilidade", max_length=255, null=True, blank=True)
+    avaliability = models.CharField(u"Disponibilidade", max_length=255, null=True, blank=True)
     date = models.DateTimeField(u"Data e hora", null=True, blank=True)
     link = models.CharField(u"Link", max_length=255, null=True, blank=True)
     location = models.CharField(u"Localização", max_length=255, null=True, blank=True)

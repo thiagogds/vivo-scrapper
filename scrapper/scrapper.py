@@ -14,11 +14,11 @@ BOOK = u'reservar'
 SOLD_OUT = u'Esgotado'
 CANCEL = u'cancelar a reserva'
 
-avaliabilty_choices = {
-    CLOSED: 'CL',
-    BOOK: 'BK',
-    SOLD_OUT: 'SO',
-    CANCEL: 'CA',
+avaliability_choices = {
+    CLOSED: Ticket.CLOSED,
+    BOOK: Ticket.BOOK,
+    SOLD_OUT: Ticket.SOLD_OUT,
+    CANCEL: Ticket.CANCEL,
 }
 
 def value(tr):
@@ -52,16 +52,16 @@ class Vivo(object):
 
             href = tr('.titulo a').attr['href']
             name = tr('.titulo').text()
-            avaliabilty = tr('.disponibilidade').text()
+            avaliability = tr('.disponibilidade').text()
 
-            if u"\xbb" in avaliabilty:
-                avaliabilty = avaliabilty[2:]
+            if u"\xbb" in avaliability:
+                avaliability = avaliability[2:]
 
-            if name and avaliabilty:
+            if name and avaliability:
                 ticket['internal_id'] = href.split('&')[1][2:]
                 ticket['link'] = href
                 ticket['name'] = name
-                ticket['avaliabilty'] = avaliabilty_choices[avaliabilty]
+                ticket['avaliability'] = avaliability_choices[avaliability]
                 self.tickets.append(ticket)
     def _parse_datetime(self, str_datetime):
         return make_aware(datetime.strptime(str_datetime.encode('utf-8'), '%d/%m/%Y às %H:%Mh'))
@@ -90,15 +90,15 @@ class Vivo(object):
                 item['date'] = self._parse_datetime(item['date'])
             ticket = Ticket.objects.filter(internal_id=item['internal_id'])
             if len(ticket):
-                was_available = ticket.first().avaliabilty == avaliabilty_choices[BOOK]
+                was_available = ticket.first().avaliability == Ticket.BOOK
                 ticket.update(**item)
-                is_available = ticket.first().avaliabilty == avaliabilty_choices[BOOK]
+                is_available = ticket.first().avaliability == Ticket.BOOK
 
                 if not was_available and is_available:
                     availables.append(ticket)
             else:
                 ticket = Ticket.objects.create(**item)
-                is_available = ticket.avaliabilty == avaliabilty_choices[BOOK]
+                is_available = ticket.avaliability == Ticket.BOOK
 
                 if is_available:
                     availables.append(ticket)
