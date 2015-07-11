@@ -1,0 +1,25 @@
+server {
+    listen 80 http;
+    charset utf-8;
+    #server_name metapix.com.br *.metapix.com.br;
+
+    root %(current)s;
+
+    location /static {
+        # if asset versioning is used
+        if ($query_string) {
+            expires max;
+        }
+
+        root %(current)s/%(package)s;
+    }
+    location / {
+        if (-f $document_root/maintenance.html) {
+            return 503;
+        }
+
+        uwsgi_pass unix:%(share)s/%(project)s.sock;
+        include uwsgi_params;
+        #include /etc/nginx/bots.conf;
+    }
+}
