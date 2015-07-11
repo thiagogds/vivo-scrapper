@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'simple_email_confirmation',
     'registration',
+    'scrapper',
 )
 
 MIDDLEWARE_CLASSES = (
