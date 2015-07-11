@@ -1,0 +1,9 @@
+Novos ingressos grátis:
+{% for ticket in tickets %}
+  - {{ ticket.name }}
+  - {{ ticket.date }}
+  - {{ ticket.location }}
+  - {{ ticket.address }}
+  - {{ ticket.description }}
+##################################
+{% endfor %}
