@@ -11,7 +11,7 @@ from unipath import Path
 from decouple import config
 from django.utils.timezone import make_aware, utc
 
-from scrapper.scrapper import Vivo, Wallet
+from scrapper.scrapper import Vivo
 from scrapper.models import Ticket
 
 FILE_DIR = Path(__file__)
