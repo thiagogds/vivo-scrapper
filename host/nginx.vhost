@@ -1,7 +1,7 @@
 server {
     listen 80;
     charset utf-8;
-    server_name 104.131.127.200;
+    server_name ingressosgratis.com *.ingressosgratis.com;
 
     root %(current)s;
 
