@@ -83,3 +83,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = PROJECT_DIR.child('static')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'normal': {
+            'format': '%(levelname)s %(name)s %(message)s'
+        },
+    },
+    'handlers': {
+        'stderr': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'normal',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['stderr'],
+            'level': 'DEBUG',
+        },
+    },
+}
