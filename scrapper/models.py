@@ -14,7 +14,7 @@ class Ticket(models.Model):
     link = models.CharField(u"Link", max_length=255, null=True, blank=True)
     location = models.CharField(u"Localização", max_length=255, null=True, blank=True)
     address = models.CharField(u"Endereço", max_length=255, null=True, blank=True)
-    description = models.CharField(u"Descrição", max_length=255, null=True, blank=True)
+    description = models.TextField(u"Descrição", null=True, blank=True)
 
     def add_ticket(self):
         already_available = False
