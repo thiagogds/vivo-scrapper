@@ -7,6 +7,8 @@ from unipath import Path
 
 PROJECT_DIR = Path(__file__).parent
 
+ADMINS = (('Thiago Garcia', 'thiagogds14@gmail.com'),)
+
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
