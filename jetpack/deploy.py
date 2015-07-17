@@ -68,7 +68,7 @@ def migrate(release_dir=None):
         release_dir = env.PROJECT.current
 
     with cd(release_dir):
-        run("./bin/python manage.py syncdb --migrate --noinput")
+        run("./bin/python manage.py migrate --noinput")
 
 
 @task
