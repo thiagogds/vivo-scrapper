@@ -21,3 +21,4 @@ wsgiref==0.1.2
 django-simple-email-confirmation==0.12
 model-mommy==1.2.4
 psycopg2==2.6.1
+djrill==1.4.0

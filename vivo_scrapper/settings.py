@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_email_confirmation',
+    'djrill',
     'registration',
     'scrapper',
 )
@@ -70,9 +71,10 @@ DATABASES = {
             cast=db_url),
 }
 
-EMAIL_BACKEND=config('EMAIL_BACKEND',
+EMAIL_BACKEND = config('EMAIL_BACKEND',
     default='django.core.mail.backends.smtp.EmailBackend'
 )
+MANDRILL_API_KEY = config('MANDRILL_API_KEY')
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
