@@ -16,7 +16,7 @@ TEMPLATE_DEBUG = DEBUG
 
 TESTING = 'test' in sys.argv
 
-ALLOWED_HOSTS = ['104.131.127.200']
+ALLOWED_HOSTS = ['104.131.127.200', 'localhost', '127.0.0.1',]
 
 AUTH_USER_MODEL = 'registration.User'
 LOGIN_URL = '/login/'
