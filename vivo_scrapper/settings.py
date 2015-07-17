@@ -7,6 +7,8 @@ from unipath import Path
 
 PROJECT_DIR = Path(__file__).parent
 
+ADMINS = (('Thiago Garcia', 'thiagogds14@gmail.com'),)
+
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -14,7 +16,7 @@ TEMPLATE_DEBUG = DEBUG
 
 TESTING = 'test' in sys.argv
 
-ALLOWED_HOSTS = ['104.131.127.200']
+ALLOWED_HOSTS = ['104.131.127.200', 'localhost', '127.0.0.1',]
 
 AUTH_USER_MODEL = 'registration.User'
 LOGIN_URL = '/login/'
@@ -27,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_email_confirmation',
+    'djrill',
     'registration',
     'scrapper',
 )
@@ -70,9 +73,11 @@ DATABASES = {
             cast=db_url),
 }
 
-EMAIL_BACKEND=config('EMAIL_BACKEND',
+EMAIL_BACKEND = config('EMAIL_BACKEND',
     default='django.core.mail.backends.smtp.EmailBackend'
 )
+MANDRILL_API_KEY = config('MANDRILL_API_KEY')
+DEFAULT_FROM_EMAIL = "thiagogds14@gmail.com"
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
