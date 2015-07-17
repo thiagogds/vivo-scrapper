@@ -31,3 +31,5 @@ class Ticket(models.Model):
         if not already_available and ticket.avaliabilty == avaliabilty_choices[BOOK]:
             return ticket
 
+    def __unicode__(self):
+        return self.name
