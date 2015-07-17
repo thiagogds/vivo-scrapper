@@ -17,7 +17,7 @@ class Command(BaseCommand):
         availables = client._save_tickets()
 
         if len(availables) > 0:
-            emails = User.objects.values_list('email', flat=True)
+            emails = User.objects.filter(is_active=True).values_list('email', flat=True)
             mail = EmailTemplate(
                 subject=u'Tem evento novo!', bcc=emails,
                 tpl_message=u'scrapper/mail.txt',
