@@ -95,7 +95,7 @@ class Vivo(object):
                 is_available = ticket.first().avaliability == Ticket.BOOK
 
                 if not was_available and is_available:
-                    availables.append(ticket)
+                    availables.append(ticket.first())
             else:
                 ticket = Ticket.objects.create(**item)
                 is_available = ticket.avaliability == Ticket.BOOK
