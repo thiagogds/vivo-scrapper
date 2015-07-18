@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('registration.views',
-    url(r'^register/$', 'register', name='registration'),
+    url(r'^$', 'register', name='registration'),
     url(r'^register/complete$', 'registration_complete', name='registration_complete'),
     url(r'^activation/$', 'activation', name='activation'),
 )
