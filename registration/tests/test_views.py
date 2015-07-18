@@ -83,6 +83,7 @@ class ActivationView(TestCase):
     def test_activate_user(self):
         confirmation_key = self.user.confirmation_key
         url = reverse("auth:activation") + "?activation_key=%s" % confirmation_key
+
         response = self.client.get(url)
 
         user = User.objects.last()
@@ -107,11 +108,11 @@ class ActivationView(TestCase):
 
         self.assertEqual(400, response.status_code)
 
-    def test_redirec_to_login(self):
+    def test_redirect_to_complete(self):
         confirmation_key = self.user.confirmation_key
         url = reverse("auth:activation") + "?activation_key=%s" % confirmation_key
         response = self.client.get(url)
 
-        expected_url = "http://testserver/login/"
+        expected_url = reverse('auth:activation_complete')
 
         self.assertRedirects(response, expected_url, fetch_redirect_response=False)

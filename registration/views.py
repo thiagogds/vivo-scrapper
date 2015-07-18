@@ -43,6 +43,8 @@ class RegistrationView(FormView):
 class RegistrationComplete(TemplateView):
     template_name = 'registration/registration_complete.html'
 
+class ActivationComplete(TemplateView):
+    template_name = 'registration/activation_complete.html'
 
 def activation(request):
     activation_key = request.GET.get('activation_key', '')
@@ -56,8 +58,9 @@ def activation(request):
     except EmailAddress.DoesNotExist, EmailAddress.EmailConfirmationExpired:
         raise SuspiciousOperation
 
-    return redirect('auth:login')
+    return redirect('auth:activation_complete')
 
 
 register = RegistrationView.as_view()
 registration_complete = RegistrationComplete.as_view()
+activation_complete = ActivationComplete.as_view()
