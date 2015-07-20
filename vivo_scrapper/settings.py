@@ -77,7 +77,7 @@ EMAIL_BACKEND = config('EMAIL_BACKEND',
     default='django.core.mail.backends.smtp.EmailBackend'
 )
 MANDRILL_API_KEY = config('MANDRILL_API_KEY')
-DEFAULT_FROM_EMAIL = "thiagogds14@gmail.com"
+DEFAULT_FROM_EMAIL = "no-reply@ingressosgratis.com"
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
