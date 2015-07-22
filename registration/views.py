@@ -26,7 +26,7 @@ class RegistrationView(FormView):
         )
 
         mail = EmailTemplate(
-            subject=u'Gate - Account Activation', to=[user.email],
+            subject=u'Ingressos Grátis - Ativação da conta', to=[user.email],
             tpl_message=u'registration/email/activation.txt',
             tpl_alternative=u'registration/email/activation.html',
             context={'activation_url': activation_url}
