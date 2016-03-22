@@ -47,8 +47,8 @@ def build(release_dir):
         run('ln -sf %s %s' % (env.PROJECT.media, release_media))
 
         run("virtualenv .")
-        run('%(release_dir)s/bin/pip install pip-accel==0.22.3' % locals())
-        run('CFLAGS="-O0" %(release_dir)s/bin/pip-accel install -r requirements.txt' % locals())
+        run('%(release_dir)s/bin/pip install -U pip' % locals())
+        run('CFLAGS="-O0" %(release_dir)s/bin/pip install -r requirements.txt' % locals())
         run("%(release_dir)s/bin/python manage.py collectstatic --noinput" % locals())
 
 
