@@ -18,11 +18,13 @@ class Command(BaseCommand):
 
         if len(availables) > 0:
             emails = User.objects.filter(is_active=True).values_list('email', flat=True)
-            mail = EmailTemplate(
-                subject=u'Tem evento novo!', bcc=emails,
-                tpl_message=u'scrapper/mail.txt',
-                tpl_alternative=u'scrapper/mail.html',
-                context={'tickets': availables}
-            )
+            for email in emails:
+                mail = EmailTemplate(
+                    to=[email],
+                    subject=u'Tem evento novo!',
+                    tpl_message=u'scrapper/mail.txt',
+                    tpl_alternative=u'scrapper/mail.html',
+                    context={'tickets': availables}
+                )
 
-            mail.send()
+                mail.send()

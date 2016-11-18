@@ -26,7 +26,6 @@ class TestSendEmail(TestCase):
 
         call_command('send_emails')
 
-        self.assertEqual(1, len(mail.outbox))
-        self.assertIn('john@example.com', mail.outbox[0].bcc)
-        self.assertIn('john+1@example.com', mail.outbox[0].bcc)
-        self.assertNotIn('john+2@example.com', mail.outbox[0].bcc)
+        self.assertEqual(2, len(mail.outbox))
+        self.assertIn('john@example.com', mail.outbox[0].to)
+        self.assertIn('john+1@example.com', mail.outbox[1].to)
