@@ -5,7 +5,6 @@ import datetime
 
 import unittest
 import vcr
-import coopy.base
 from django.test import TestCase
 from unipath import Path
 from decouple import config

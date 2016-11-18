@@ -4,7 +4,6 @@ from datetime import datetime
 from decouple import config
 from pyquery import PyQuery as pq
 from lxml import etree
-from coopy.base import init_persistent_system
 from django.utils.timezone import make_aware
 
 from .models import Ticket
