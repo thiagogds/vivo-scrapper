@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_email_confirmation',
+    'raven.contrib.django.raven_compat',
     'registration',
     'scrapper',
 )
@@ -88,25 +89,74 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = PROJECT_DIR.child('static')
 
+RAVEN_URL = config('RAVEN_URL')
+
+if RAVEN_URL:
+    RAVEN_CONFIG = {'dsn': RAVEN_URL}
+    ROOT_HANDLER = 'sentry'
+else:
+    RAVEN_CONFIG = {}
+    ROOT_HANDLER = 'stderr'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'root': {
+        'level': 'WARNING',
+        'handlers': [ROOT_HANDLER],
+    },
     'formatters': {
         'normal': {
             'format': '%(levelname)s %(name)s %(message)s'
         },
     },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
         'stderr': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'normal',
         },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['stderr'],
-            'level': 'DEBUG',
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
         },
-    },
+        'py.warnings': {
+            'handlers': ['console'],
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['stderr'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['stderr'],
+            'propagate': False,
+        },
+    }
 }

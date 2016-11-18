@@ -3,7 +3,6 @@ Jinja2==2.7.3
 PyYAML==3.11
 Unipath==1.0
 contextlib2==0.4.0
-coopy==0.3.1
 cssselect==0.9.1
 dj-database-url==0.3.0
 ipdb==0.9
@@ -22,3 +21,4 @@ django-simple-email-confirmation==0.12
 model-mommy==1.2.4
 psycopg2==2.6.1
 sparkpost==1.0.5
+raven==5.32.0
